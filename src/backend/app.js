@@ -26,13 +26,13 @@ router.use("/meals", mealsRouter);
 //----------------------------------------------------------------------------------------------------------------------
 // Respond with all meals in the future (relative to the when datetime) - /future-meals
 
-app.get('/future-meals', async (req, res) => {
+mealsRouter.get('/future-meals', async (req, res) => {
   try {
     const [rows] = await knex.raw("SELECT meal.id, meal.title, meal.meal_date_time FROM `meal` WHERE `meal_date_time` >= CURDATE()")
     if ([rows]) {
       res.json({
         status: 'success',
-        data: [rows]
+        data: rows
       })
     } else {
       throw new Error('Something went wrong');
@@ -54,7 +54,7 @@ app.get('/past-meals', async (req, res) => {
     if ([rows]) {
       res.json({
         status: 'success',
-        data: [rows]
+        data: rows
       })
     } else {
       throw new Error('Something went wrong');
@@ -78,7 +78,7 @@ app.get('/all-meals', async (req, res) => {
     if ([rows]) {
       res.json({
         status: 'success',
-        data: [rows]
+        data: rows
       })
     } else {
       throw new Error('Something went wrong');
@@ -100,7 +100,7 @@ app.get('/first-meal', async (req, res) => {
     if ([rows]) {
       res.json({
         status: 'success',
-        data: [rows]
+        data: rows
       })
     } else {
       throw new Error('Something went wrong');
@@ -122,7 +122,7 @@ app.get('/last-meal', async (req, res) => {
     if ([rows]) {
       res.json({
         status: 'success',
-        data: [rows]
+        data: rows
       })
     } else {
       throw new Error('Something went wrong');
