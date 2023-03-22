@@ -1,12 +1,31 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import TestComponent from "./components/TestComponent/TestComponent";
+import React, { useState, useEffect } from "react";
+//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+//import TestComponent from "./components/TestComponent/TestComponent";
+import Header from "./Header";
 
 function App() {
+  // State while initial fetch
+  const[meals, setMeals]=useState([])
+  
+  useEffect(()=>{
+    const fetchMeals = async ()=>{
+      try{
+        const response = await fetch("api/meals");
+        console.log(response)
+      }catch(error){
+
+      }
+    }
+    fetchMeals();
+  })
+  
+
   return (
+    <Header title="Meal Sharing"/>
+/*
     <Router>
       <Route exact path="/">
-        <p>test</p>
+        <p>testing React </p>
       </Route>
       <Route exact path="/lol">
         <p>lol</p>
@@ -15,6 +34,7 @@ function App() {
         <TestComponent></TestComponent>
       </Route>
     </Router>
+  */  
   );
 }
 
