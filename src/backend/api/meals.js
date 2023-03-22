@@ -8,13 +8,13 @@ router.get("/", async (request, response) => {
     // knex syntax for selecting things. Look up the documentation for knex for further info
     const meals = await knex("meal").select("*");
     if (!meals) {
-      return response.status(404)
+      return response.status(404);
     } else {
-      response.json(meals);
+      return (response.status(200).send.json(meals));
     }
   } catch (error) {
-    throw error;
-  }
+    response.status(500).send({ error: 'Something failed!' })
+}
 });
 
 // /api/meals - POST - Adds a new meal to the database
@@ -24,7 +24,7 @@ router.post("/", async (request, response) => {
     await knex("meal").insert(meal);
 
     if (!meal) {
-      return response.status(404)
+      return response.status(404);
     } else {
       response.json(meal);
     }
@@ -37,14 +37,18 @@ router.post("/", async (request, response) => {
 router.get("/:id", async (request, response) => {
   try {
     const id = request.params.id;
-    const meal = await knex("meal").select("*").where({ id: id });
-    if (!meal) {
-      return response.status(404)
+    if (isNaN(id)) {
+      return response.status(400).json({ err: "Numbers only, please!" });
     } else {
-      response.json(meal);
+      const meal = await knex("meal").select("*").where({ id: id });
+      if (!meal) {
+        return response.status(404).send();
+      } else {
+        return response.status(200).send(meal);
+      }
     }
   } catch (error) {
-    throw error;
+    res.status(500).send({ error: "Something failed!" });
   }
 });
 
@@ -52,33 +56,77 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     const id = request.params.id;
-    const changes = request.body;
-    const meal = await knex("meal").where({ id: id }).update(changes);
-    if (!meal) {
-      return response.status(404)
+    if (isNaN(id)) {
+      return response.status(400).json({ err: "Numbers only, please!" });
     } else {
-      response.json(changes);
+      const changes = request.body;
+      if(changes === null){
+        console.log(changes)
+        return response.status(400).send("Please enter changes for updation!");
+      }
+      const meal = await knex("meal").where({ id: id }).update(changes);
+      if(id !== id){
+        response.send("No Meals")
+      }
+
+      
+      
+      /*else{
+        const meal = await knex("meal").where({ id: id }).update(changes);
+      if (!meal) {
+        return response.status(404).send();
+      } else {
+        return response.status(200).send(changes);
+      }
+
+      }
+      */
+      return response.status(200).send(changes);
     }
   } catch (error) {
-    return response.status(400).send(error?.sqlMessage);
-    // res.status(500).json({message: "Error updating new post", error: err}
+    console.log(error)
+    response.status(500).send({ error: "Something failed!" });
   }
+  
 });
 
 // /api/meals/:id - DELETE - 	Deletes the meal by id
 router.delete("/:id", async (request, response) => {
+  const id = request.params.id;
+  try {
+    if (isNaN(id)) {
+      return response.status(400).json({ err: "Numbers only, please!" });
+    } else {
+      const meal = await knex("meal").where({ id: id }).delete();
+      if (!meal) {
+        return response.status(404).send();
+      } else {
+        response.status(204).send({ message: "Deleted meal" });
+      }
+    }
+  } catch (error) {
+    return response.status(400).send(error?.sqlMessage);
+  }
+});
+
+/*
+204 -> is used when delete request is successful, 
+       we don't use 200 here.
+*/
+
+/*
   try {
     const id = request.params.id;
     const meal = await knex("meal").where({ id: id }).delete();
     if (!meal) {
-      return response.status(404)
+      return response.status(404);
     } else {
-      response.send({ "message": "Deleted meal" });
+      response.send({ message: "Deleted meal" });
     }
   } catch (error) {
     throw error;
     // res.status(500).json({message: "Error updating new post", error: err}
   }
 });
-
+*/
 module.exports = router;
