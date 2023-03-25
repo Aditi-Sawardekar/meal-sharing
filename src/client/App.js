@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import TestComponent from "./components/TestComponent/TestComponent";
+//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+//import TestComponent from "./components/TestComponent/TestComponent";
 import Header from "./Header";
 import MealsList from "./MealsList";
 
@@ -29,10 +29,9 @@ function App() {
       <MealsList 
         meals={meals}
       />
-   
-   
+    </div>
 
-    //Already in file, commented and saved if required in future
+    /* Already in file, commented and saved if required in future
     <Router>
       <Route exact path="/">
         <p>testing React </p>
@@ -44,8 +43,7 @@ function App() {
         <TestComponent></TestComponent>
       </Route>
     </Router>
-    </div>
-  
+  */
   );
 }
 

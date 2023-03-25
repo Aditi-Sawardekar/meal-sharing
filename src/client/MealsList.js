@@ -4,6 +4,7 @@ import Meal from './Meal'
 const MealsList = ({ meals }) => {
   
     const mealList = meals.map((meal) => (
+      
       <Meal
         key={meal.id}
         meal={meal}
