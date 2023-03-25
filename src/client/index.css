@@ -3,7 +3,66 @@
 * {
   font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  
 }
+
+body {
+  font-size: 16px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem;
+}
+
+div{
+  width: 70%;
+}
+
+header {
+  background-color: rgb(255, 69, 0);
+  padding: 2px 0px;
+  width: 100%;
+}
+
+h1 {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: rgb(243, 152, 116);
+  text-underline-offset: 10px;
+  /* distance of underline from its initial position.*/
+  text-align: center;
+  padding: 2rem 0rem;
+}
+
+ul {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width:100%;
+  padding-top: 1.5rem;
+}
+
+li {
+  background-color: rgba(40, 60, 80, 0.105);
+  list-style-type: none;
+  /* To remove bullets from all li*/
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid black;
+  padding: 0.5rem 0;
+}
+
+/* Commented Styles is default css, Kept this in file as it might be required in future
+
 
 #root {
   padding-left: 30%;
@@ -11,10 +70,6 @@
   height: 100vh;
 }
 
-body {
-  margin: 0;
-  font-size: 17px;
-}
 
 ul {
   list-style: none;
@@ -37,6 +92,7 @@ button {
   font-size: 17px;
 }
 
+
 @media screen and (max-width: 1400px) {
   #root {
     padding-left: 30%;
@@ -50,3 +106,4 @@ button {
     padding-right: 0;
   }
 }
+*/
