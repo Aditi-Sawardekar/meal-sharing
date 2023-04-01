@@ -18,7 +18,7 @@ router.get("/", async (request, response) => {
             response.json(reservations);
         }
     } catch (error) {
-        throw error;
+        response.status(503).send(`${error.message}`);
     }
 });
 
@@ -49,7 +49,7 @@ router.get("/:id", async (request, response) => {
             response.json(reservation);
         }
     } catch (error) {
-        throw error;
+        response.status(503).send(`${error.message}`);
     }
 });
 
@@ -65,7 +65,7 @@ router.put("/:id", async (request, response) => {
             response.json(changes)
         }
     } catch (error) {
-        throw error;
+        response.status(503).send(`${error.message}`);
     }
 });
 
@@ -80,8 +80,7 @@ router.delete("/:id", async (request, response) => {
             response.send({ "message": "Deleted reservation" });
         }
     } catch (error) {
-        throw error;
-        // res.status(500).json({message: "Error updating new post", error: err}
+        response.status(503).send(`${error.message}`);
     }
 });
 
