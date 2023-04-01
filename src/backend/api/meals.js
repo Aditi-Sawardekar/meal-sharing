@@ -65,29 +65,16 @@ router.put("/:id", async (request, response) => {
         return response.status(400).send("Please enter changes for updation!");
       }
       const meal = await knex("meal").where({ id: id }).update(changes);
-      if(id !== id){
-        response.send("No Meals")
-      }
-
-      
-      
-      /*else{
-        const meal = await knex("meal").where({ id: id }).update(changes);
-      if (!meal) {
-        return response.status(404).send();
-      } else {
-        return response.status(200).send(changes);
-      }
-
-      }
-      */
+    if (!meal) {
+      return response.status(404).send(`No meal found with Id:${id}`);
+    } else {
       return response.status(200).send(changes);
     }
-  } catch (error) {
-    console.log(error)
-    response.status(500).send({ error: "Something failed!" });
   }
-  
+  } catch (error) {
+    return response.status(400).send(error?.sqlMessage);
+    // res.status(500).json({message: "Error updating new post", error: err}
+  }  
 });
 
 // /api/meals/:id - DELETE - 	Deletes the meal by id
@@ -114,19 +101,4 @@ router.delete("/:id", async (request, response) => {
        we don't use 200 here.
 */
 
-/*
-  try {
-    const id = request.params.id;
-    const meal = await knex("meal").where({ id: id }).delete();
-    if (!meal) {
-      return response.status(404);
-    } else {
-      response.send({ message: "Deleted meal" });
-    }
-  } catch (error) {
-    throw error;
-    // res.status(500).json({message: "Error updating new post", error: err}
-  }
-});
-*/
 module.exports = router;
