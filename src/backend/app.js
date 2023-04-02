@@ -7,7 +7,7 @@ const knex = require('./database');
 
 const mealsRouter = require("./api/meals");
 const buildPath = path.join(__dirname, "../../dist");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT; // || 3000;
 const cors = require("cors");
 
 // For week4 no need to look into this!
@@ -142,10 +142,10 @@ if (process.env.API_PATH) {
 } else {
   throw "API_PATH is not set. Remember to set it in your .env file"
 }
-/* 
+
 // for the frontend. Will first be covered in the react class
 app.use("*", (req, res) => {
   res.sendFile(path.join(`${buildPath}/index.html`));
 });
-*/
+
 module.exports = app;
