@@ -6,75 +6,15 @@ const knex = require("../database");
 router.get("/", async (request, response) => {
   try {
     let query = knex("meal");
-
+    //let query = knex.select("*").from("meal")
     // knex syntax for selecting things. Look up the documentation for knex for further info
     // api/meals?maxPrice=90
     if ("maxPrice" in request.query) {
       const maxPrice = parseInt(request.query.maxPrice);
-      if (!isNaN(maxPrice)) query = query.where("price", "<", maxPrice);
-      else {
-        return response.status(404).send(`please provide maxprice of the meal`);
-      }
-    }
-
-    // api/meals?title=Indian%20platter
-    if ("title" in request.query) {
-      const title = request.query.title;
-      query = query.where("title", "like", `%${title}%`);
-    }
-
-    // api/meals?dateAfter=2022-10-01
-    if ("dateAfter" in request.query) {
-      const dateAfter = new Date(request.query.dateAfter);
-      if (dateAfter != "Invalid Date") {
-        query = query.where("when", ">", dateAfter);
+      if (!isNaN(maxPrice)) {
+        query = query.where("price", "<", maxPrice);
       } else {
-        return response
-          .status(404)
-          .send(`please provide valid dateAfter Field in the query`);
-      }
-    }
-
-    // api/meals?dateBefore=2022-08-08
-    if ("dateBefore" in request.query) {
-      const dateBefore = new Date(request.query.dateBefore);
-      if (dateBefore && dateBefore != "Invalid Date") {
-        query = query.where("meal_date_time", "<", dateBefore);
-      } else {
-        return response
-          .status(404)
-          .send(`please provide valid dateBefore Field in the query`);
-      }
-    }
-
-    // api/meals?limit=7
-    if ("limit" in request.query) {
-      const limit = parseInt(request.query.limit);
-      if (!isNaN(limit)) {
-        query = query.limit(limit);
-      } else {
-        return response
-          .status(404)
-          .send(`please provide valid limit value  in the query`);
-      }
-    }
-
-    // api/meals?sortKey=price
-    if ("sortKey" in request.query) {
-      const orderBy = request.query.sortKey.toString().trim();
-      if (
-        orderBy === "price" ||
-        orderBy === "when" ||
-        orderBy === "max_reservations"
-      ) {
-        if ("sortDir" in request.query) {
-          let sortOrder = request.query.sortDir.toString().trim().toUpperCase();
-          query = query.orderBy(orderBy, sortOrder);
-        } else {
-          query = query.orderBy(orderBy);
-        }
-      } else {
-        response.send(`Invalid sort key`);
+        return response.status(404).json({ err: "Numbers only please" });
       }
     }
 
@@ -84,21 +24,98 @@ router.get("/", async (request, response) => {
         .select(
           "meal.title",
           "meal.id",
+          "meal.max_reservations",
+          knex.raw("(sum(reservation.number_of_guests)) AS Total_reserved_yet"),
           knex.raw(
-            "(meal.max_reservations -  sum(reservation.number_of_guests)) as available_slot"
+            "(meal.max_reservations - sum(reservation.number_of_guests)) as Available_slot"
           )
         )
         .join("reservation", "meal.id", "=", "reservation.meal_id")
         .groupBy("reservation.meal_id")
-        .having("available_slot", ">", "0");
+        .having("meal.max_reservations", ">", "Total_reserved_yet");
+    }
+    /*  availableReservations -> mysql query to get available reservations
+          SELECT meal.* , SUM(reservation.number_of_guests) AS Total_reserved_yet
+          FROM meal
+          INNER JOIN reservation
+          ON meal.id = reservation.meal_id
+          GROUP BY reservation.meal_id
+          HAVING meal.max_reservations > Total_reserved_yet;
+        */
+
+    // api/meals?title=Indian%20platter
+    if ("title" in request.query) {
+      const title = request.query.title;
+      query = query.where("title", "like", `%${title}%`);
     }
 
-    const data = await query;
-    data.length
-      ? response.status(200).json(data)
+    // api/meals?dateAfter=2022-10-01
+    if ("dateAfter" in request.query) {
+      console.log("dateAfter");
+      // Date.parse -> To check if date is valid
+      const dateAfter = new Date(request.query.dateAfter);
+      if (!isNaN(Date.parse(dateAfter))) {
+        query = query.where("meal_date_time", ">", dateAfter);
+      } else {
+        return response
+          .status(404)
+          .json({ err: "Please enter valid Dates only please" });
+      }
+    }
+
+    // api/meals?dateBefore=2022-08-08
+    if ("dateBefore" in request.query) {
+      console.log("dateBefore");
+      // Date.parse -> To check if date is valid
+      const dateBefore = new Date(request.query.dateBefore);
+      if (!isNaN(Date.parse(dateBefore))) {
+        query = query.where("meal_date_time", ">", dateBefore);
+      } else {
+        return response
+          .status(404)
+          .json({ err: "Please enter valid Dates only please" });
+      }
+    }
+
+    // api/meals?limit=7
+    if ("limit" in request.query) {
+      const limit = parseInt(request.query.limit);
+      if (!isNaN(limit)) {
+        query = query.limit(limit);
+      } else {
+        return response.status(404).json({ err: "Numbers only please" });
+      }
+    }
+
+    // api/meals?sortKey=price
+    if ("sortKey" in request.query) {
+      // orderBy sorts the records in ascending order by default
+      const orderBy = request.query.sortKey.toString().trim();
+      if (
+        orderBy === "price" ||
+        orderBy === "when" ||
+        orderBy === "max_reservations"
+      ) {
+        console.log("Sort");
+        console.log(request.query.sortKey);
+        if ("sortDir" in request.query) {
+          query = query.orderBy(request.query.sortKey, request.query.sortDir);
+        } else {
+          query = query.orderBy(request.query.sortKey, "asc");
+        }
+      }
+      /*  OrderBy - query in mySql
+          SELECT * FROM `meal`
+          ORDER BY `price`
+      */
+    }
+
+    const meal = await query;
+    meal.length
+      ? response.status(200).json(meal)
       : response.send(`No meal Found`);
-  } catch (e) {
-    response.status(500).send(e.message);
+  } catch (error) {
+    response.status(500).send(error.message);
   }
 });
 
@@ -161,7 +178,7 @@ router.delete("/:id", async (request, response) => {
       response.send({ message: "Deleted meal" });
     }
   } catch (error) {
-    response.status(503).send(`Couldn't Delete`)
+    response.status(503).send(`Couldn't Delete`);
   }
 });
 
