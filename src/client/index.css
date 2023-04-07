@@ -3,18 +3,171 @@
 * {
   font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
-}
-
-#root {
-  padding-left: 30%;
-  padding-right: 30%;
-  height: 100vh;
+  margin: 0;
+  padding: 0;  
 }
 
 body {
-  margin: 0;
-  font-size: 17px;
+  font-size: 16px;
+  min-height: 100vh;
+  display: flex;
+  
 }
+
+#root { 
+  /*background-color: purple;*/
+  padding-left: 20%;
+  padding-right: 20%;
+
+  /* vh represents the viewport-percentage length unit based on the browser default viewport size.*/
+  height: 100vh;
+  
+  /* To expand and take the available width */ 
+  flex-grow: 1; 
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.App{
+  width: 90%;
+  height: 100vh;
+}
+
+/* All components to take height - full page*/
+    
+.Home, .MealsList, .Not-Found, .About, .MealCard, .NewReservation, .ReviewMeal{
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100vh;
+  width: 100%;
+}
+
+header {
+  background-color: rgb(255, 69, 0); /*rgb(228,116,53) /*rgb(255, 69, 0)*/;
+  padding: 2px 0px;
+  width: 100%;
+}
+
+.App-Title {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: rgb(243, 152, 116);
+  text-underline-offset: 10px;
+  /* distance of underline from its initial position.*/
+  text-align: center;
+  padding: 2rem 0rem;
+ 
+}
+
+.Nav{
+  /*background-color: aqua; */
+  width: 100%;
+  display: flex;
+}
+
+.searchBar{
+  width: 40%;
+  padding: 1.2rem 0 0 0.75rem;  
+}
+
+#search{
+  padding: 0.5rem;
+}
+
+.Nav ul{
+  /* background-color: red; */
+  list-style-type: none;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;  
+  width: 60%;
+  padding-bottom: 1.2rem;
+}
+
+.Nav li {
+  padding: 0.5rem;  
+}
+
+ul {
+ /* background-color: yellow; */
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  overflow-y: auto;
+  
+}
+
+
+.Meal {
+  background-color: rgba(40, 60, 80, 0.105);
+  list-style-type: none;
+  /* To remove bullets from all li*/
+ 
+  width: 30%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid black;
+  padding: 0.5rem 0;
+    
+}
+
+.Meal h3, .Meal p, .Meal h4{
+  color: black;
+}
+
+.home{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+
+.reserve-meal-button, .review-meal-button{
+  margin-top: 1rem;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  border-radius: 5%;
+  margin-top: 0.8rem;
+}
+
+.review-meal-button{
+  background-color: rgb(243, 152, 116);  
+}
+
+.reserve-meal-button{
+  background-color: rgb(40, 60, 80);
+}
+
+@media screen and (max-width: 1400px) {
+  #root {
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #root {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Commented Styles is default css, Kept this in file as it might be required in future
+
+
+
+
 
 ul {
   list-style: none;
@@ -37,16 +190,6 @@ button {
   font-size: 17px;
 }
 
-@media screen and (max-width: 1400px) {
-  #root {
-    padding-left: 30%;
-    padding-right: 30%;
-  }
-}
 
-@media screen and (max-width: 750px) {
-  #root {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
+
+*/
