@@ -25,7 +25,7 @@ import ReviewMeal from "./components/ReviewMeal";
 function App() {
   // State while initial fetch
   const [meals, setMeals] = useState([]);
-
+  
   //Search in Nav
   const [search, setSearch] = useState("");
   const [searchMeal, setSearchMeal] = useState([]);
@@ -66,10 +66,12 @@ function App() {
 
       <Switch>
         <Route exact path="/">
-          <Home meals={meals} />
+          <Home meals={meals}
+           />
         </Route>
         <Route exact path="/meals">
-          <MealsList meals={searchMeal} />
+          <MealsList 
+          meals={searchMeal}/>
         </Route>
         <Route exact path="/meals/:id">
           <MealCard meals={meals} />
