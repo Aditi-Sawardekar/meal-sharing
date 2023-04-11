@@ -32,13 +32,23 @@ module.exports = {
           options: { limit: 100000 }
         },
       },
+      // Added to load images
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
+      },
+      // Change completed here
+
     ],
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
   devServer: {
-    static: '/',
+    //static: '/',
     historyApiFallback: true,
     port: parseInt(process.env.CLIENT_PORT, 10),
     open: process.env.OPEN_BROWSER === 'true' ? true : false,
