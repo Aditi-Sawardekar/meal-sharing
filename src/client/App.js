@@ -29,21 +29,7 @@ function App() {
       <MealsList 
         meals={meals}
       />
-    </div>
-
-    /* Already in file, commented and saved if required in future
-    <Router>
-      <Route exact path="/">
-        <p>testing React </p>
-      </Route>
-      <Route exact path="/lol">
-        <p>lol</p>
-      </Route>
-      <Route exact path="/test-component">
-        <TestComponent></TestComponent>
-      </Route>
-    </Router>
-  */
+    </div>    
   );
 }
 
