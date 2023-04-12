@@ -12,3 +12,4 @@ const MealsList = ({ meals }) => {
 };
 
 export default MealsList;
+

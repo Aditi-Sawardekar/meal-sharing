@@ -7,6 +7,7 @@ import MealsList from "./MealsList";
 function App() {
   // State while initial fetch
   const [meals, setMeals] = useState([]);
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +15,7 @@ function App() {
     const fetchMeals = async () => {
       try {
         const response = await fetch("api/meals");
+
         if (!response.ok) {
           throw Error("Data not recieved. Something went wrong!");
         }
@@ -27,6 +29,7 @@ function App() {
         setError(error);
       } finally {
         setIsLoading(false);
+
       }
     };
     (async () => await fetchMeals())();
@@ -35,6 +38,7 @@ function App() {
   return (
     <div>
       <Header title="Meal Sharing" />
+
       <>
         {isLoading && <p>Loading...</p>}
         {error && <p>{`${error}`}</p>}
@@ -55,6 +59,7 @@ function App() {
       </Route>
     </Router>
   */
+
   );
 }
 
