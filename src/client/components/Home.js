@@ -1,5 +1,6 @@
 import React from "react";
 import Meal from "./Meal";
+import {Link} from "react-router-dom"
 
 const Home = ({ meals }) => {
   const mealList = meals.map((meal) => <Meal key={meal.id} meal={meal} />);
@@ -50,8 +51,20 @@ const Home = ({ meals }) => {
             food mainly comprises of fish curries. People hailing from North
             India eat mainly wheat and those in the South are rice-consuming
             people.
+
+
+            <Link to={"/meals"}>
+              <button className="meals-button">Go to Meals</button>
+            </Link>
           </p>
           */}
+
+          <div>
+            <Link to={"/meals"}>
+              <button className="meals-button">Go to Meals</button>
+            </Link>
+          </div>
+          
           <ul className="home-page-meals">{mealList.slice(0, 3)}</ul>
         </>
       ) : (

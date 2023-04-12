@@ -27,7 +27,8 @@ const NewReservation = ({}) => {
     (async () => await fetchReservations())();
   }, []);
 
-  const handleReserveMeal = async () => {
+  const handleReserveMeal = async (e) => {
+    e.preventDefault();
     console.log("Book the Meal");
     const id = reservations.length
       ? reservations[reservations.length - 1].id + 1
@@ -56,6 +57,9 @@ const NewReservation = ({}) => {
         },
       });
 
+      if (response.status === 200) {
+        alert("You meal is Booked");        
+      }
       const newReservation = await response.json();
 
       // Add to Reservations

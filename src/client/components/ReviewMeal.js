@@ -120,7 +120,7 @@ const ReviewMeal = () => {
           />
         </div>
 
-        <button className="review-button" type="submit">
+        <button className="review-meal-button" type="submit">
           Submit Review
         </button>
       </form>
