@@ -69,7 +69,7 @@ router.get("/", async (request, response) => {
       // Date.parse -> To check if date is valid
       const dateBefore = new Date(request.query.dateBefore);
       if (!isNaN(Date.parse(dateBefore))) {
-        query = query.where("meal_date_time", ">", dateBefore);
+        query = query.where("meal_date_time", "<", dateBefore);
       } else {
         return response
           .status(404)
