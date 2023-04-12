@@ -25,10 +25,10 @@ import ReviewMeal from "./ReviewMeal";
 function App() {
   // State while initial fetch
   const [meals, setMeals] = useState([]);
-
+  
   //Search in Nav
   const [search, setSearch] = useState("");
-  const [searchedMeal, setSearchedMeal] = useState([]);
+  const [searchedMeal, setSearchedMeal] = useState([]);  
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -45,7 +45,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+       <Router>
       <Header title="Meal Sharing" />
       <Nav search={search} setSearch={setSearch} />
 

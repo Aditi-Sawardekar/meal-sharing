@@ -155,4 +155,10 @@ app.use("*", (req, res) => {
   res.sendFile(path.join(`${buildPath}/index.html`));
 });
 
+
+// To listen to port
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
+
 module.exports = app;
