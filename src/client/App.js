@@ -1,65 +1,85 @@
 import React, { useState, useEffect } from "react";
-//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-//import TestComponent from "./components/TestComponent/TestComponent";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
+
+import TestComponent from "./components/TestComponent/TestComponent";
+
+// Components fixed on Browser
 import Header from "./Header";
+import Nav from "./Nav";
+import Footer from "./Footer";
+
+// Components that change
+import Home from "./Home";
 import MealsList from "./MealsList";
+import MealCard from "./MealCard";
+import NewReservation from "./NewReservation";
+import NotFound from "./NotFound";
+import About from "./About";
+import ReviewMeal from "./ReviewMeal";
 
 function App() {
   // State while initial fetch
   const [meals, setMeals] = useState([]);
-
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  //Search in Nav
+  const [search, setSearch] = useState("");
+  const [searchedMeal, setSearchedMeal] = useState([]);  
 
   useEffect(() => {
     const fetchMeals = async () => {
       try {
         const response = await fetch("api/meals");
-
-        if (!response.ok) {
-          throw Error("Data not recieved. Something went wrong!");
-        }
-
         const menuItems = await response.json();
 
         setMeals(menuItems);
-        setError(null);
       } catch (error) {
         console.log(error);
-        setError(error);
-      } finally {
-        setIsLoading(false);
-
       }
     };
     (async () => await fetchMeals())();
   }, []);
 
   return (
-    <div>
+       <Router>
       <Header title="Meal Sharing" />
+      <Nav search={search} setSearch={setSearch} />
 
-      <>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>{`${error}`}</p>}
-        {!isLoading && !error && <MealsList meals={meals} />}{" "}
-      </>
-    </div>
+      <Switch>
+        <Route exact path="/">
+          <Home meals={meals} />
+        </Route>
+        <Route exact path="/meals">
+          <MealsList meals={meals} />
+        </Route>
+        <Route exact path="/meals/:id">
+          <MealCard meals={meals} />
+        </Route>
+        <Route path="/about" component={About} />
 
-    /* Already in file, commented and saved if required in future
-    <Router>
-      <Route exact path="/">
-        <p>testing React </p>
-      </Route>
-      <Route exact path="/lol">
-        <p>lol</p>
-      </Route>
-      <Route exact path="/test-component">
-        <TestComponent></TestComponent>
-      </Route>
+        {/*Created reservation form */}
+        <Route exact path="/meals/:id/reservation">
+          <NewReservation />
+        </Route>
+
+        {/* To add Review to a Meal*/}
+        <Route exact path="/meals/:id/review">
+          <ReviewMeal />{" "}
+        </Route>
+
+        <Route exact path="/test-component">
+          <TestComponent></TestComponent>
+        </Route>
+
+        <Route path="*" component={NotFound} />
+      </Switch>
+
+      <Footer />
     </Router>
-  */
-
   );
 }
 
