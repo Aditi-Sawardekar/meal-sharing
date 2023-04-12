@@ -5,7 +5,11 @@ const path = require("path");
 
 const knex = require('./database');
 
+// Routers 
 const mealsRouter = require("./api/meals");
+const reservationsRouter = require("./api/reservations");
+const reviewsRouter = require("./api/reviews");
+
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
@@ -22,6 +26,8 @@ app.use(express.json());
 app.use(cors());
 
 router.use("/meals", mealsRouter);
+router.use("/reservations", reservationsRouter);
+router.use("/reviews", reviewsRouter);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Respond with all meals in the future (relative to the when datetime) - /future-meals
@@ -142,10 +148,15 @@ if (process.env.API_PATH) {
 } else {
   throw "API_PATH is not set. Remember to set it in your .env file"
 }
-/* 
+
 // for the frontend. Will first be covered in the react class
 app.use("*", (req, res) => {
   res.sendFile(path.join(`${buildPath}/index.html`));
 });
-*/
+
+// To listen to port
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
+
 module.exports = app;
