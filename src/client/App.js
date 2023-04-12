@@ -59,7 +59,7 @@ function App() {
     setSearchMeal(searchedMeal);
   }, [meals, search]);
 
-  return (
+   return (
     <Router>
       <Header title="Atithi" />
       <Nav search={search} setSearch={setSearch} />

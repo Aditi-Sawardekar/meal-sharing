@@ -11,7 +11,7 @@ const reservationsRouter = require("./api/reservations");
 const reviewsRouter = require("./api/reviews");
 
 const buildPath = path.join(__dirname, "../../dist");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT; // || 3000;
 const cors = require("cors");
 
 // For week4 no need to look into this!
@@ -154,6 +154,11 @@ if (process.env.API_PATH) {
 // for the frontend. Will first be covered in the react class
 app.use("*", (req, res) => {
   res.sendFile(path.join(`${buildPath}/index.html`));
+});
+
+// To listen to port
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
 
 module.exports = app;
