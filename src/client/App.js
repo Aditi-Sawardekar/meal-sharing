@@ -9,18 +9,18 @@ import {
 import TestComponent from "./components/TestComponent/TestComponent";
 
 // Components fixed on Browser
-import Header from "./Header";
-import Nav from "./Nav";
-import Footer from "./Footer";
+import Header from "./components/Header";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 // Components that change
-import Home from "./Home";
-import MealsList from "./MealsList";
-import MealCard from "./MealCard";
-import NewReservation from "./NewReservation";
-import NotFound from "./NotFound";
-import About from "./About";
-import ReviewMeal from "./ReviewMeal";
+import Home from "./components/Home";
+import MealsList from "./components/MealsList";
+import MealCard from "./components/MealCard";
+import NewReservation from "./components/NewReservation";
+import NotFound from "./components/NotFound";
+import About from "./components/About";
+import ReviewMeal from "./components/ReviewMeal";
 
 function App() {
   // State while initial fetch
@@ -28,7 +28,7 @@ function App() {
   
   //Search in Nav
   const [search, setSearch] = useState("");
-  const [searchedMeal, setSearchedMeal] = useState([]);  
+  const [searchMeal, setSearchMeal] = useState([]);
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -44,17 +44,34 @@ function App() {
     (async () => await fetchMeals())();
   }, []);
 
-  return (
-       <Router>
-      <Header title="Meal Sharing" />
+  // Search Meal:
+  /* Dependencies: meals and search - 
+      - If meals are added the data to filter will change.
+      - Then when we type to search, it should match with the data.  
+  */
+
+  useEffect(() => {
+    const searchedMeal = meals.filter(
+      (meal) => meal.title.toLowerCase().includes(search.toLowerCase())
+      // || ((meal.description).toLowerCase()).includes(search.toLowerCase())
+    );
+    console.log(searchedMeal);
+    setSearchMeal(searchedMeal);
+  }, [meals, search]);
+
+   return (
+    <Router>
+      <Header title="Atithi" />
       <Nav search={search} setSearch={setSearch} />
 
       <Switch>
         <Route exact path="/">
-          <Home meals={meals} />
+          <Home meals={meals}
+           />
         </Route>
         <Route exact path="/meals">
-          <MealsList meals={meals} />
+          <MealsList 
+          meals={searchMeal}/>
         </Route>
         <Route exact path="/meals/:id">
           <MealCard meals={meals} />
@@ -68,7 +85,7 @@ function App() {
 
         {/* To add Review to a Meal*/}
         <Route exact path="/meals/:id/review">
-          <ReviewMeal />{" "}
+          <ReviewMeal />
         </Route>
 
         <Route exact path="/test-component">

@@ -1,54 +1,64 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-@import 'theme.css';
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import "theme.css";
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;  
+  padding: 0;
 }
 
 body {
   font-size: 16px;
   min-height: 100vh;
   display: flex;
-  
 }
 
-#root { 
+#root {
   /*background-color: purple;*/
-  padding-left: 20%;
-  padding-right: 20%;
 
   /* vh represents the viewport-percentage length unit based on the browser default viewport size.*/
   height: 100vh;
-  
-  /* To expand and take the available width */ 
-  flex-grow: 1; 
-  
+
+  /* To expand and take the available width */
+  flex-grow: 1;
+
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.App{
+.App {
   width: 90%;
   height: 100vh;
 }
 
 /* All components to take height - full page*/
-    
-.Home, .MealsList, .Not-Found, .About, .MealCard, .NewReservation, .ReviewMeal{
+.Home,
+.MealsList,
+.Not-Found,
+.About,
+.MealCard,
+.NewReservation,
+.ReviewMeal {
   flex-grow: 1;
   overflow-y: auto;
   height: 100vh;
   width: 100%;
+  padding: 1rem 2.5rem;
 }
 
 header {
-  background-color: rgb(255, 69, 0); /*rgb(228,116,53) /*rgb(255, 69, 0)*/;
+  background-color: rgb(255, 69, 0); /*rgb(228,116,53) /*rgb(255, 69, 0)*/
   padding: 2px 0px;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.namaste-logo {
+  width: 15%;
+  height: 110px;
 }
 
 .App-Title {
@@ -59,41 +69,67 @@ header {
   /* distance of underline from its initial position.*/
   text-align: center;
   padding: 2rem 0rem;
- 
 }
 
-.Nav{
-  /*background-color: aqua; */
+.Nav {
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 
-.searchBar{
-  width: 40%;
-  padding: 1.2rem 0 0 0.75rem;  
+.searchBar {
+  width: 100%;
+  padding: 1rem 0 1rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
-#search{
+#search {
   padding: 0.5rem;
+  width: 70%;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
-.Nav ul{
-  /* background-color: red; */
+.Nav ul {
   list-style-type: none;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  align-items: flex-start;  
+  align-items: flex-start;
   width: 60%;
-  padding-bottom: 1.2rem;
 }
 
 .Nav li {
-  padding: 0.5rem;  
+  padding: 0.5rem;
 }
 
-ul {
- /* background-color: yellow; */
+.Home {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.Home h2,
+p {
+  padding-bottom: 1rem;
+}
+
+/* Image in meal (MealsList) */
+.photo {
+  border: 5px solid rgb(243, 152, 116);
+  border-radius: 5px;
+  width: 260px;
+  height: 209px;
+}
+
+/* Image in MealCard*/
+.mealImage {
+  width: 100%;
+  height: 500px;
+}
+
+.MealsList {
+  /*background-color: yellow;*/
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -102,64 +138,159 @@ ul {
   gap: 1rem;
   padding-top: 1.5rem;
   overflow-y: auto;
-  
 }
 
-
-.Meal {
+li.Meal {
   background-color: rgba(40, 60, 80, 0.105);
   list-style-type: none;
   /* To remove bullets from all li*/
- 
-  width: 30%;
+
+  padding: 0.5rem 0;
+  width: 100%;
   display: flex;
-  flex-flow: column wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   border: 1px solid black;
-  padding: 0.5rem 0;
-    
 }
 
-.Meal h3, .Meal p, .Meal h4{
+.Meal h3,
+.Meal p,
+.Meal h4 {
   color: black;
 }
 
-.home{
+.meal-card-title {
   display: flex;
-  flex-flow: column nowrap;
+  gap: 2rem;
+  padding-top: 1.5rem;
 }
 
+.meal-card-title {
+  padding-bottom: 1rem;
+}
 
-.reserve-meal-button, .review-meal-button{
+.reserve-meal-button,
+.review-meal-button,
+.meals-button
+ {
   margin-top: 1rem;
   color: white;
   font-size: 0.8rem;
   padding: 0.5rem;
-  border-radius: 5%;
-  margin-top: 0.8rem;
+  border-radius: 5px;
+  margin: 0.8rem 0;
 }
 
-.review-meal-button{
-  background-color: rgb(243, 152, 116);  
+.review-meal-button, .meals-button {
+  background-color: rgb(243, 152, 116);
 }
 
-.reserve-meal-button{
+.reserve-meal-button {
   background-color: rgb(40, 60, 80);
 }
 
-@media screen and (max-width: 1400px) {
-  #root {
-    padding-left: 1%;
-    padding-right: 1%;
-  }
+.new-reservation-form, .review-meal-form{
+  width: 100%;
 }
 
-@media screen and (max-width: 750px) {
+.NewReservation h2,
+p {
+  padding-bottom: 1rem;
+}
+
+.new-reservation-form div, .review-meal-form div{
+  display: flex;
+  justify-content: space-between;
+}
+
+.new-reservation-form input, .review-meal-form input, textarea {
+  padding: 0.5rem;
+  width: 70%;
+  border-radius: 5px;
+  margin: 0.5rem;
+  border: 1px solid black;
+}
+
+.Footer{
+  padding-top: 0.5rem;
+}
+
+/* Mobile devices: 320px — 480px  */
+@media only screen and (max-width: 480px) {
+  /*End of @media for mobile devices*/
+
   #root {
     padding-left: 0;
     padding-right: 0;
   }
+
+  
+} /*End of @media for mobiles*/
+
+/* iPads, Tablets: 481px — 768px */
+@media screen and (max-width: 768px) and (min-width: 481px) {
+  /*End of @media for ipads and tablets*/
+
+  li.Meal {
+    width: 45%;
+  }
 }
+
+.new-reservation-form, .review-meal-form{
+  width: 70%;
+}
+
+/* Small screens, laptops: 769px — 1400px  (and above) */
+@media only screen and (min-width: 768px) {
+  /*  @media screen and (max-width: 1400px) {*/
+  #root {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  
+  li.Meal {
+    width: 30%;
+  }
+
+  .Nav {
+    flex-direction: row;
+  }
+
+  .Home ul {
+    display: flex;
+    flex-flow: row;
+    gap: 1px;
+  }
+
+  /* Image in meal (MealsList) */
+  .photo {
+    border: 5px solid rgb(243, 152, 116);
+    border-radius: 5px;
+    width: 260px;
+    height: 209px;
+  }
+
+  /* Image in MealCard*/
+  .mealImage {
+    width: 100%;
+    height: 500px;
+  }
+
+  .meal-card-title {
+    justify-content: center;
+  }
+
+  .date-location {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
+  }
+
+  .new-reservation-form, .review-meal-form{
+    width: 40%;
+  }
+} /*End of @media for small screen and laptops*/
+
 

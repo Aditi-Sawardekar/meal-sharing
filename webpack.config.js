@@ -32,6 +32,16 @@ module.exports = {
           options: { limit: 100000 }
         },
       },
+      // Added to load images
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
+      },
+      // Change completed here
+
     ],
   },
   resolve: {
